@@ -1,0 +1,154 @@
+const express = require('express');
+const path = require('path');
+
+const app = express();
+const port = 3000;
+
+// Middleware to serve static files
+app.use(express.static(path.join(__dirname)));
+
+// Middleware to parse URL-encoded data from POST requests
+app.use(express.urlencoded({ extended: true }));
+
+// GET method handler
+app.get('/submit-get', (req, res) => {
+    // Data is in req.query for GET requests
+    const name = req.query.name;
+    const branch = req.query.branch;
+    const semester = req.query.semester;
+
+    // Display the information
+    const htmlResponse = `
+        <h2>Student Information (GET)</h2>
+        <p>Name: <b>${name}</b></p>
+        <p>Branch: <u>${branch}</u></p>
+        <p>Semester: ${semester}</p>
+        <br>
+        <a href="/">Go Back</a>
+    `;
+
+    res.send(htmlResponse);
+});
+
+// POST method handler
+app.post('/submit-post', (req, res) => {
+    // Data is in req.body for POST requests
+    const name = req.body.name;
+    const branch = req.body.branch;
+    const semester = req.body.semester;
+
+    // Display the information
+    const htmlResponse = `
+        <h2>Student Information (POST)</h2>
+        <p>Name: <b>${name}</b></p>
+        <p>Branch: <u>${branch}</u></p>
+        <p>Semester: ${semester}</p>
+        <br>
+        <a href="/">Go Back</a>
+    `;
+
+    res.send(htmlResponse);
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is listening at http://localhost:${port}`);
+    console.log('Open your browser and navigate to http://localhost:3000/index.html');
+});
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Information</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Student Information Form</h2>
+
+        <!-- GET Method -->
+        <form action="/submit-get" method="get">
+
+            <h3>Using GET Method</h3>
+
+            <label for="name-get">Name:</label>
+            <input type="text" id="name-get" name="name" required>
+
+            <label for="branch-get">Branch:</label>
+            <input type="text" id="branch-get" name="branch" required>
+
+            <label for="semester-get">Semester:</label>
+            <input type="number" id="semester-get" name="semester" required>
+
+            <button type="submit">Submit (GET)</button>
+
+        </form>
+
+
+        <!-- POST Method -->
+        <form action="/submit-post" method="post">
+
+            <h3>Using POST Method</h3>
+
+            <label for="name-post">Name:</label>
+            <input type="text" id="name-post" name="name" required>
+
+            <label for="branch-post">Branch:</label>
+            <input type="text" id="branch-post" name="branch" required>
+
+            <label for="semester-post">Semester:</label>
+            <input type="number" id="semester-post" name="semester" required>
+
+            <button type="submit">Submit (POST)</button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
