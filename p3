@@ -1,0 +1,150 @@
+1. Educational.js
+import React from "react";
+
+class EdTable extends React.Component {
+    render() {
+        const education = [
+            {
+                id: 1,
+                name: "National Public School",
+                place: "Bengaluru",
+                stddeg: "10th",
+                grade: "A+",
+            },
+            {
+                id: 2,
+                name: "Indian Institute of Science",
+                place: "Bengaluru",
+                stddeg: "under grade",
+                grade: "9.8",
+            },
+        ];
+
+        const edudetails = education.map(educ => (
+            <EdRow
+                key={educ.id}
+                id={educ.id}
+                name={educ.name}
+                place={educ.place}
+                stddeg={educ.stddeg}
+                grade={educ.grade}
+            />
+        ));
+
+        return (
+            <table>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>place</th>
+                    <th>education</th>
+                    <th>grade</th>
+                </tr>
+                <tbody>
+                    {edudetails}
+                </tbody>
+            </table>
+        );
+    }
+}
+
+class EdRow extends React.Component {
+    render() {
+        return (
+            <tr>
+                <td>{this.props.id}</td>
+                <td>{this.props.name}</td>
+                <td>{this.props.place}</td>
+                <td>{this.props.stddeg}</td>
+                <td>{this.props.grade}</td>
+            </tr>
+        );
+    }
+}
+
+class Education extends React.Component {
+    render() {
+        return (
+            <section>
+                <EdTable />
+            </section>
+        );
+    }
+}
+
+export default Education;
+
+2. Resume_Header.js
+import React from "react";
+
+class Resume_Header extends React.Component {
+    render() {
+        return (
+            <h1>Resume Details</h1>
+        );
+    }
+}
+
+export default Resume_Header;
+
+3. Resume_Person_Info.js
+import React from "react";
+
+class Resume_Person_Info extends React.Component {
+    render() {
+        return (
+            <div>
+                <div>
+                    Name : <p>Prashanth K</p>
+                </div>
+                <br />
+
+                <div>
+                    Address : <p>Kengeri</p>
+                </div>
+                <br />
+
+                <div>
+                    Phone No : <p>1234567890</p>
+                </div>
+                <br />
+
+                <div>
+                    email id : <p>prashanthk@rvce.edu.in</p>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default Resume_Person_Info;
+
+4. index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+
+import Resume_Header from "./ResumeCreate/Resume_Header";
+import Resume_Person_Info from "./ResumeCreate/Resume_Person_Info";
+import Education from "./ResumeCreate/Educational";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
+    <React.StrictMode>
+        <Resume_Header />
+        <Resume_Person_Info />
+        <Education />
+    </React.StrictMode>
+);
+
+Folder structure
+src/
+│
+├── index.js
+├── index.css
+│
+└── ResumeCreate/
+    ├── Resume_Header.js
+    ├── Resume_Person_Info.js
+    └── Educational.js
