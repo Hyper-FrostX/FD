@@ -1,0 +1,40 @@
+npm init -y
+npm install express
+
+nano index.js
+const express = require("express");
+const app = express();
+const PORT = 3000;
+
+app.get("/", (req, res) => {
+    res.send("Hello from Git + Docker Integration!");
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
+
+nano Dockerfile
+  # Stage 1 - Build Stage
+FROM node:18 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+# Stage 2 - Runtime Stage
+FROM node:18-slim
+WORKDIR /app
+COPY --from=build /app /app
+EXPOSE 3000
+CMD ["node", "index.js"]
+  
+docker build -t program-4 .
+docker run -d -p 3000:3000 --name program4-container program-4
+
+git remote add origin https://github.com/vishnujagadishbmca25-create/dockerdemo.git
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git push -u origin main
