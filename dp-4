@@ -38,3 +38,5 @@ git add .
 git commit -m "Initial commit"
 git branch -M main
 git push -u origin main
+git config --global user.name "Your GitHub Username"
+git config --global user.email "Your GitHub Email"
